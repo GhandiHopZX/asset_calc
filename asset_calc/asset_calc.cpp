@@ -112,7 +112,7 @@ void menu()
     // values to input
 
     OutText("Select your function type... 1 - 5", 1);
-    OutText("1 AssetValue,\n 2 Exposure Factor,\n 3 Single Lose Expectancy,\n 4 Annualized Loss Expectancy,\n 5 Annualized Rate of Occurance,\n 6 Quit,\n 7 or greater Clear All", 1);
+    OutText(" 1 AssetValue,\n 2 Exposure Factor,\n 3 Single Lose Expectancy,\n 4 Annualized Loss Expectancy,\n 5 Annualized Rate of Occurance,\n 6 Quit,\n 7 or greater Clear All", 1);
     cin >> me;
 
 
@@ -146,7 +146,7 @@ void menu()
         cin >> value;
         OutText("name of asset?", 1);
         cin >> nameA;
-        OutText("claim of asset?", 1);
+        OutText("amount of claims of this asset?", 1);
         cin >> *claim;
         OutText("Amount of assets?", 1);
         cin >> *amount;
@@ -162,7 +162,7 @@ void menu()
         OutText("(Exposure Factor) EF of asset?", 1);
         cin >> *iEF;
 
-        SLE(AVR, EFR);
+        OutVal(SLE(AVR, EFR));
         menu();
         break;
 
