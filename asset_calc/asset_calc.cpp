@@ -77,7 +77,9 @@ void menu()
     
 
     int me; // menu choices
-    string* aname = new string;
+    //string* aname = new string;
+    int* claim = new int;
+    int* incidents = new int;
     int* iALE = new int;
     int* iARO = new int;
     int* iSLE = new int;
@@ -87,6 +89,8 @@ void menu()
     int* iLOP = new int;
     int* iCC = new int;
     //refs
+    int& incidentsR = *incidents;
+    int& claimR = *claim;
     int& ALER = *iALE;
     int& amountR = *amount;
     int& AROR = *iARO;
@@ -96,7 +100,7 @@ void menu()
     int& LORR = *iLOR;
     int& LOPR = *iLOP;
     int& CCR = *iCC;
-    string& anameR = *aname;
+    //string& anameR = *aname;
 
     // values to input
 
@@ -110,7 +114,7 @@ void menu()
     case '1':
         OutText("Asset Value", 1);
         OutText("Name of asset?", 1);
-        cin >> *aname;
+        cin >> nameA;
         OutText("value of asset?", 1);
         cin >> value;
         OutText("Amount of assets?", 1);
@@ -125,24 +129,45 @@ void menu()
         // calculate
         // since this is just a basic prog for now this will only spit out one int no real calculations yet
         AV(newAssetR, amountR, LOPR, LORR, CCR);
-
-        //AV(newAsset.name, );
         break;
 
     case '2':
         OutText("Exposure Factor", 1);
+        
+        OutText("value of asset?", 1);
+        cin >> value;
+        OutText("name of asset?", 1);
+        cin >> nameA;
+        OutText("claim of asset?", 1);
+        cin >> *claim;
+
+        EF(newAssetR, claimR);
         break;
 
     case '3':
         OutText("Single Loss Expectancy", 1);
+        OutText("(Asset Value) AV of asset?", 1);
+        cin >> *iAV;
+        OutText("(Exposure Factor) EF of asset?", 1);
+        cin >> *iEF;
+
+        SLE(AVR, EFR);
         break;
 
     case '4':
         OutText("Annualized Loss Expectancy", 1);
+        OutText("(Single Loss Expectancy) SLE of asset?", 1);
+        cin >> *iSLE;
+        OutText("(Annualized Rate of Occurance) ARO of asset?", 1);
+        cin >> *iARO;
+        ALE(SLER, AROR);
         break;
 
     case '5':
         OutText("Annualized Rate of Occurance", 1);
+        OutText("Number of incidents?", 1);
+        cin >> *incidents;
+        ARO(incidentsR);
         break;
 
     case '6':
@@ -153,9 +178,13 @@ void menu()
     default:
         OutText("invalid option... CLEARING ALL VALUES", 1);
         delete newAsset;
-        delete aname;
+        delete claim;
+        delete incidents;
         delete iALE;
         delete iARO;
+        delete iLOR;
+        delete iLOP;
+        delete iCC;
         delete iSLE;
         delete iEF;
         delete iAV;
