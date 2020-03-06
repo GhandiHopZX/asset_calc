@@ -95,6 +95,7 @@ void menu()
     int* iLOR = new int;
     int* iLOP = new int;
     int* iCC = new int;
+
     //refs
     int& incidentsR = *incidents;
     int& claimR = *claim;
@@ -192,7 +193,7 @@ void menu()
         break;
 
     default:
-        OutText("invalid option... CLEARING ALL VALUES", 1);
+        OutText("CLEARING ALL VALUES", 1);
         delete newAsset;
         delete claim;
         delete incidents;
@@ -205,6 +206,7 @@ void menu()
         delete iEF;
         delete iAV;
         system("CLS");
+        menu();
         break;
         
     }
