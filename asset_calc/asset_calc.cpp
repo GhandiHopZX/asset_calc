@@ -20,12 +20,13 @@ struct item {
 //stubburs
 
 int AV(item asset, int Amount, int LOP, int LOR, int CC); // value out
-int EF(item asset, int claim); // percentage out 
+int EF(item asset, int claim, int amount); // percentage out 
 int SLE(int AV, int EF); // single value out
 int ARO(int incidents); // Number of incidents
 int ALE(int, int); // SLE X ARO = ALE
 void menu(); 
 void OutText(string, int);
+void OutVal(int val);
 
 int main()
 { 
@@ -39,32 +40,38 @@ int main()
 int AV(item asset, int Amount, int LOP, int LOR, int CC)
 {
     int* meil = new int;
-    *meil = asset.value * Amount;
+    *meil = asset.value;
     int &melr = *meil;
-    int melcpy = melr; // this value doesn't change
+    int melcpy = melr; // this value doesn't change only when the method is used again
     delete meil;
 
     return melcpy;
 }
 
-int EF(item asset, int claim)
+int EF(item asset, int claim, int amount)
 {
-    return 0;
+    int* meil = new int;
+    *meil = (asset.value * claim) / amount;
+    int& melr = *meil;
+    int melcpy = melr;
+    delete meil;
+
+    return melcpy;
 }
 
 int SLE(int AV, int EF)
 {
-    return 0;
+    return AV * EF;
 }
 
 int ARO(int incidents)
 {
-    return 0;
+    return incidents;
 }
 
-int ALE(int, int)
+int ALE(int SLE, int ARO)
 {
-    return 0;
+    return SLE * ARO;
 }
 
 void menu()
@@ -111,7 +118,7 @@ void menu()
 
     switch (me)
     {
-    case '1':
+    case 1:
         OutText("Asset Value", 1);
         OutText("Name of asset?", 1);
         cin >> nameA;
@@ -128,10 +135,11 @@ void menu()
 
         // calculate
         // since this is just a basic prog for now this will only spit out one int no real calculations yet
-        AV(newAssetR, amountR, LOPR, LORR, CCR);
+        OutVal(AV(newAssetR, amountR, LOPR, LORR, CCR));
+        menu();
         break;
 
-    case '2':
+    case 2:
         OutText("Exposure Factor", 1);
         
         OutText("value of asset?", 1);
@@ -140,11 +148,14 @@ void menu()
         cin >> nameA;
         OutText("claim of asset?", 1);
         cin >> *claim;
+        OutText("Amount of assets?", 1);
+        cin >> *amount;
 
-        EF(newAssetR, claimR);
+        OutVal(EF(newAssetR, claimR, amountR));
+        menu();
         break;
 
-    case '3':
+    case 3:
         OutText("Single Loss Expectancy", 1);
         OutText("(Asset Value) AV of asset?", 1);
         cin >> *iAV;
@@ -152,25 +163,30 @@ void menu()
         cin >> *iEF;
 
         SLE(AVR, EFR);
+        menu();
         break;
 
-    case '4':
+    case 4:
         OutText("Annualized Loss Expectancy", 1);
         OutText("(Single Loss Expectancy) SLE of asset?", 1);
         cin >> *iSLE;
         OutText("(Annualized Rate of Occurance) ARO of asset?", 1);
         cin >> *iARO;
-        ALE(SLER, AROR);
+
+        OutVal(ALE(SLER, AROR));
+        menu();
         break;
 
-    case '5':
+    case 5:
         OutText("Annualized Rate of Occurance", 1);
         OutText("Number of incidents?", 1);
         cin >> *incidents;
-        ARO(incidentsR);
+
+        OutVal(ARO(incidentsR));
+        menu();
         break;
 
-    case '6':
+    case 6:
         OutText("Quit", 1);
         EXIT_SUCCESS;
         break;
@@ -188,6 +204,7 @@ void menu()
         delete iSLE;
         delete iEF;
         delete iAV;
+        system("CLS");
         break;
         
     }
@@ -199,4 +216,7 @@ void OutText(string text, int times)
     {
         cout << text << endl;
     }
+}
+void OutVal(int val) {
+    cout << val << endl;
 }
